@@ -4,7 +4,7 @@ require(msm)
 require(R.matlab)
 library(readr)
 
-agingDotsTable <- read_csv("D:/Pablo/AgingDots/agingDotsTable.txt")
+agingDotsTable <- read_csv("D:/Pablo/AgingDots/results/agingDotsTable.txt")
 agingDotsTable$meanOfDots = as.integer(agingDotsTable$meanOfDots)
 
 summary(m1 <- glm(meanOfDots ~ name + numberOfStemCells, family="poisson", data=agingDotsTable))
@@ -36,18 +36,18 @@ rexp.est[, "Robust SE"] <- s
 rexp.est
 
 (s1 <- data.frame(numberOfStemCells = mean(agingDotsTable$numberOfStemCells),
-                  name = factor(1:3, levels = 1:3, labels = levels(agingDotsTable$name))))
+                  name = factor(c("nodesClusterRandom", "nodesClusterRaw12Month", "nodesClusterRaw18Month"), levels =  c("nodesClusterRandom", "nodesClusterRaw12Month", "nodesClusterRaw18Month"))))
 
 predict(m1, s1, type="response", se.fit=TRUE)
 
 ## calculate and store predicted values
-p$phat <- predict(m1, type="response")
+agingDotsTable$phat <- predict(m1, type="response")
 
 ## order by program and then by math
-p <- p[with(p, order(name, numberOfStemCells)), ]
+agingDotsTable <- agingDotsTable[with(agingDotsTable, order(name, numberOfStemCells)), ]
 
 ## create the plot
-ggplot(p, aes(x = numberOfStemCells, y = phat, colour = name)) +
+ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
   geom_point(aes(y = meanOfDots), alpha=.5, position=position_jitter(h=.2)) +
   geom_line(size = 1) +
   labs(x = "total number of stem cells", y = "Number of stem cells in clusters")
