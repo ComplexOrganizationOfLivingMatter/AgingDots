@@ -21,7 +21,7 @@ r.est
 with(m1, cbind(res.deviance = deviance, df = df.residual,
                p = pchisq(deviance, df.residual, lower.tail=FALSE)))
 
-m2 <- update(m1, . ~ . - prog)
+m2 <- update(m1, . ~ . - name)
 ## test model differences with chi square test
 anova(m2, m1, test="Chisq")
 
