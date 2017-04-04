@@ -51,3 +51,10 @@ ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
   geom_point(aes(y = meanOfDots), alpha=.5, position=position_jitter(h=.2)) +
   geom_line(size = 1) +
   labs(x = "total number of stem cells", y = "Number of stem cells in clusters")
+
+##What we really wanted! See if the classes are different
+
+m1 <- glm(meanOfDots ~ name + numberOfStemCells, family="poisson", data=agingDotsTable)
+m3 <- glm(meanOfDots ~ numberOfStemCells, family="poisson", data=agingDotsTable)
+## test model differences with chi square test
+anova(m3, m1, test="Chisq")
