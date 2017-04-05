@@ -50,7 +50,7 @@ agingDotsTable <- agingDotsTable[with(agingDotsTable, order(name, numberOfStemCe
 ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
   geom_point(aes(y = meanOfDots), alpha=.5, position=position_jitter(h=.2)) +
   geom_line(size = 1) +
-  labs(x = "total number of stem cells", y = "Number of stem cells in clusters")
+  labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters")
 
 ##What we really wanted! See if the classes are different
 
