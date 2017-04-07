@@ -46,11 +46,14 @@ agingDotsTable$phat <- predict(m1, type="response")
 ## order by program and then by math
 agingDotsTable <- agingDotsTable[with(agingDotsTable, order(name, numberOfStemCells)), ]
 
+
+agingDotsTable$name <- substr(agingDotsTable$name, 13, 30)
 ## create the plot
 ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
   geom_point(aes(y = meanOfDots), alpha=.5, position=position_jitter(h=.2)) +
   geom_line(size = 1) +
-  labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters")
+  labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters", colour = "Classes") + theme_classic() + 
+  scale_x_continuous(breaks = seq(17, 50, by=1)) + scale_y_continuous(breaks = seq(5, 50, by=5)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"))
 
 ##What we really wanted! See if the classes are different
 
