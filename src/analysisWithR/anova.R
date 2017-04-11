@@ -57,7 +57,7 @@ ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
 
 ##What we really wanted! See if the classes are different
 
-m1 <- glm(meanOfDots ~ name + numberOfStemCells, family="poisson", data=agingDotsTable)
+summary(m2 <- glm(meanOfDots ~ name + numberOfStemCells, family="poisson", data=agingDotsTable[agingDotsTable$name != "Random", ]))
 m3 <- glm(meanOfDots ~ numberOfStemCells, family="poisson", data=agingDotsTable)
 ## test model differences with chi square test
 anova(m3, m1, test="Chisq")
