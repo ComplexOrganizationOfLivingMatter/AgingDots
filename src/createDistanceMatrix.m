@@ -1,8 +1,9 @@
 function [ ] = createDistanceMatrix( )
 %CREATEDISTANCEMATRIX Summary of this function goes here
 %   Detailed explanation goes here
-    addpath('lib')
-    dataFiles = getAllFiles('..\data\WithInvalidArea\');
+    addpath('src\lib')
+    dataFiles = getAllFiles('data\WithInvalidArea\');
+    mkdir('results\distanceMatrix');
     for numFile = 1:size(dataFiles,1)
         fullPathFile = dataFiles(numFile);
         fullPathFile = fullPathFile{:};
@@ -81,6 +82,7 @@ function [ ] = createDistanceMatrix( )
         end
         distanceMatrix = distanceMatrixFinal;
         imageNameSplitted = strsplit(imgName, '.');
+        
         save(strcat('results\distanceMatrix\', imageNameSplitted{1}, '.mat'), 'distanceMatrix', 'Centroids');
 
         %In case you want to show the image
