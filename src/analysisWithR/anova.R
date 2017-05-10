@@ -53,7 +53,7 @@ ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
   geom_point(aes(y = meanOfDots), alpha=.5, position=position_jitter(h=.2)) +
   geom_line(size = 1) +
   labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters", colour = "Classes") + theme_classic() + 
-  scale_x_continuous(breaks = seq(17, 50, by=1)) + scale_y_continuous(breaks = seq(5, 50, by=5)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"))
+  scale_x_continuous(breaks = seq(17, 50, by=1)) + scale_y_continuous(breaks = seq(5, 50, by=5)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
 
 ##What we really wanted! See if the classes are different
 
