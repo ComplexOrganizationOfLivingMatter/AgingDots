@@ -6,30 +6,16 @@ function [ meanNNodesClusterRandom20mc, stdNNodesClusterRandom20mc, meanNNodesCl
     listNEdgesClusterRandom50mc=zeros(length(directoryRandomFiles),1);
     listNNodesClusterRandom50mc=zeros(length(directoryRandomFiles),1);
     
-    threshold20mic=26.4;
-    threshold50mic=66;
-    
     for numFile=1:length(directoryRandomFiles)
         fileName=directoryRandomFiles{numFile};
             
         load(fileName)
         distanceMatrix = infoCentroids.distanceMatrix;
         
-        auxMatrix=triu(distanceMatrix);
-        auxMatrix(auxMatrix==0)=[];
-        
-        %20 micras. Edges & nodes
-        nEdgesClusterRandom20mc=sum(auxMatrix<threshold20mic);
-        [nodesCluster,~]=find((distanceMatrix<threshold20mic) & (distanceMatrix>0));
-        nNodesClusterRandom20mc=length(unique(nodesCluster));
+        [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix );
         
         listNEdgesClusterRandom20mc(numFile)=nEdgesClusterRandom20mc;      
         listNNodesClusterRandom20mc(numFile)=nNodesClusterRandom20mc;
-        
-        %50 micras. Edges & nodes
-        nEdgesClusterRandom50mc=sum(auxMatrix<threshold50mic);
-        [nodesCluster,~]=find((distanceMatrix<threshold50mic) & (distanceMatrix>0));
-        nNodesClusterRandom50mc=length(unique(nodesCluster));
         
         listNEdgesClusterRandom50mc(numFile)=nEdgesClusterRandom50mc;
         listNNodesClusterRandom50mc(numFile)=nNodesClusterRandom50mc;
