@@ -54,14 +54,19 @@ function [  ] = calculateDistanceMatrixNSCsBrdU(  )
             centroidsNSCsBrdU = oldPointsInfo.Centroids(indices, :);
             %Calculate distance Matrix from centroids and invalid area
             distanceMatrixNSCsBrdU = classifyByRegionAndCalculateDistanceMatrix(centroidsNSCsBrdU,invalidArea,H,W);
-
+            
+            [maxDist, indicesRow] = max(oldPointsInfo.distanceMatrix);
+            
+            [~, indicesCol] = max(maxDist);
+            centroidsBrdUWithCorners = vertcat(centroidsNSCsBrdU, oldPointsInfo.Centroids([indicesCol indicesRow(indicesCol)], :));
+            distanceMatrixWithCornersNSCsBrdU = classifyByRegionAndCalculateDistanceMatrix(centroidsBrdUWithCorners, invalidArea, H, W);
             thisSplittedPath=splittedPath{nFile};
 
 
             if ~isdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\'])
                 mkdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\']);
             end
-            save(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\'  month '\' thisSplittedPath{6} '\' imgName '.mat'],'distanceMatrixNSCsBrdU','centroidsNSCsBrdU')
+            save(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\'  month '\' thisSplittedPath{6} '\' imgName '.mat'], 'distanceMatrixNSCsBrdU', 'distanceMatrixWithCornersNSCsBrdU','centroidsNSCsBrdU')
         end
     end
 
