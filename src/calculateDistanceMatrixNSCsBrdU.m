@@ -5,6 +5,7 @@ function [  ] = calculateDistanceMatrixNSCsBrdU(  )
 
     %load all paths (former raw images distanceMatrices and new images alpha & omega)
     centroidPathFiles = '..\results\distanceMatrix\rawImages\';
+    oldPointsFiles = getAllFiles(centroidPathFiles);
     newPointsFiles = getAllFiles('..\data\sortedByAnimal\NSCs BrdU\');
     splittedPath = cellfun(@(x) strsplit(x, '\'), newPointsFiles, 'UniformOutput', false);
     for nFile = 1:length(newPointsFiles)
@@ -37,11 +38,18 @@ function [  ] = calculateDistanceMatrixNSCsBrdU(  )
         close all
 
         %centroids
-        CentroidsNSCsBrdU=regionprops(BWdilate,'Centroid');
-        CentroidsNSCsBrdU=cat(1,CentroidsNSCsBrdU.Centroid);
+        centroidsNSCsBrdU=regionprops(BWdilate,'Centroid');
+        centroidsNSCsBrdU=cat(1,centroidsNSCsBrdU.Centroid);
+        
+        imgNameAndExt = strcat(imgName, '.mat');
+        
+        oldPointsFile = oldPointsFiles{cellfun(@(x) isempty(strfind(x, imgNameAndExt)) == 0, oldPointsFiles)};
+        oldPointsInfo = importdata(oldPointsFile);
+        
+        distanceToOldCentroids = pdist2(centroidsNSCsBrdU, oldPointsInfo.Centroids);
         
         %Calculate distance Matrix from centroids and invalid area
-        distanceMatrixNSCsBrdU=classifyByRegionAndCalculateDistanceMatrix(CentroidsNSCsBrdU,invalidArea,H,W);
+        distanceMatrixNSCsBrdU = classifyByRegionAndCalculateDistanceMatrix(centroidsNSCsBrdU,invalidArea,H,W);
 
         thisSplittedPath=splittedPath{nFile};
 
