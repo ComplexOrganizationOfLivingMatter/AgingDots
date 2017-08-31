@@ -58,6 +58,12 @@ function [  ] = calculateDistanceMatrixNSCsBrdU(  )
             [maxDist, indicesRow] = max(oldPointsInfo.distanceMatrix);
             
             [~, indicesCol] = max(maxDist);
+            
+%             %Check if the extreme points are the good ones
+%             plot(oldPointsInfo.Centroids(:, 1), oldPointsInfo.Centroids(:, 2), '*')
+%             hold on;plot(oldPointsInfo.Centroids(indicesCol, 1), oldPointsInfo.Centroids(indicesCol, 2), 'o')
+%             hold on;plot(oldPointsInfo.Centroids(indicesRow(indicesCol), 1), oldPointsInfo.Centroids(indicesRow(indicesCol), 2), 'o')
+            
             centroidsBrdUWithCorners = vertcat(centroidsNSCsBrdU, oldPointsInfo.Centroids([indicesCol indicesRow(indicesCol)], :));
             distanceMatrixWithCornersNSCsBrdU = classifyByRegionAndCalculateDistanceMatrix(centroidsBrdUWithCorners, invalidArea, H, W);
             thisSplittedPath=splittedPath{nFile};
