@@ -11,7 +11,7 @@ function [ meanNNodesClusterRandom20mc, stdNNodesClusterRandom20mc, meanNNodesCl
             
         load(fileName)
         distanceMatrix = infoCentroids.distanceMatrix;
-        
+        %%Add corners!!!
         [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix );
         
         listNEdgesClusterRandom20mc(numFile)=nEdgesClusterRandom20mc;      
@@ -34,6 +34,12 @@ function [ meanNNodesClusterRandom20mc, stdNNodesClusterRandom20mc, meanNNodesCl
     
     meanNEdgesClusterRandom50mc=mean(listNEdgesClusterRandom50mc);
     stdNEdgesClusterRandom50mc=std(listNEdgesClusterRandom50mc);
-
+    
+    rawFiles = getAllFiles('resultsByAnimal\NSCs BrdU\distanceMatrix\3m');
+    fileNameSplitted = strsplit(fileName, '\');
+    rawFileName = strcat(fileNameSplitted{end-1}, '.mat');
+    rawFile = rawFiles{cellfun(@(x) isempty(strfind(x, rawFileName)) == 0, rawFiles)}; 
+    load(rawFile);
+    [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrixNSCsBrdU );
 end
 
