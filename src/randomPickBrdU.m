@@ -4,8 +4,8 @@ function [] = randomPickBrdU()
 % Developed by Pablo Vicente-Munuera and Pedro Gomez-Galvez
 
     %Random 100 pick of number Of centroids in BrdU from images 3 months
-    files3Months = getAllFiles('..\results\distanceMatrix\rawImages');
-    files3MonthsBrdU = getAllFiles('..\resultsByAnimal\NSCs BrdU\distanceMatrix\3m');
+    files3Months = getAllFiles('results\distanceMatrix\rawImages');
+    files3MonthsBrdU = getAllFiles('resultsByAnimal\NSCs BrdU\distanceMatrix\3m');
     for indexFile = 1:size(files3Months, 1)
         fullPathFile = files3Months{indexFile};
         load(fullPathFile);
@@ -32,15 +32,24 @@ function [] = randomPickBrdU()
                     numDots=numDots + 1;
                 end
 
-                centroidsRandom = cellfun(@(x) Centroids(x, :), indicesCentroidsRandom, 'UniformOutput', false);
+                centroidsRandomAll = cellfun(@(x) Centroids(x, :), indicesCentroidsRandom, 'UniformOutput', false);
+                
+                infoCentroidsWithCorners.centroidsRandom = centroidsRandomAll{size(brdUPointsInfo.centroidsBrdUWithCorners, 1)};
+                infoCentroidsWithCorners.indicesCentroids = indicesCentroidsRandom{size(brdUPointsInfo.centroidsBrdUWithCorners, 1)};
+                infoCentroidsWithCorners.distanceMatrix = distanceMatrix(infoCentroidsWithCorners.indicesCentroids, infoCentroidsWithCorners.indicesCentroids);
+                
+                infoCentroids.centroidsRandom = centroidsRandomAll{size(brdUPointsInfo.centroidsNSCsBrdU, 1)};
+                infoCentroids.indicesCentroids = indicesCentroidsRandom{size(brdUPointsInfo.centroidsNSCsBrdU, 1)};
+                infoCentroids.distanceMatrix = distanceMatrix(infoCentroids.indicesCentroids, infoCentroids.indicesCentroids);
+                
                 brdUPointsFileSplitted = strsplit(brdUPointsFile, '\');
 
-                outputDir = strcat('..\resultsByAnimal\NSCs BrdU\randomElection\', brdUPointsFileSplitted{end-1});
+                outputDir = strcat('resultsByAnimal\NSCs BrdU\randomElection\', brdUPointsFileSplitted{end-1});
                 if ~isdir(outputDir)
                     mkdir(outputDir);
                 end
 
-                save(strcat(outputDir, '\', imgName(1:end-4), '_Random' ,num2str(i)), 'indicesCentroidsRandom', 'centroidsRandom');
+                save(strcat(outputDir, '\', imgName(1:end-4), '_Random' ,num2str(i)), 'infoCentroids', 'infoCentroidsWithCorners' ,'centroidsRandomAll');
 
             end
         end
