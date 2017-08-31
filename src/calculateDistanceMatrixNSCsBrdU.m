@@ -41,23 +41,28 @@ function [  ] = calculateDistanceMatrixNSCsBrdU(  )
         centroidsNSCsBrdU=regionprops(BWdilate,'Centroid');
         centroidsNSCsBrdU=cat(1,centroidsNSCsBrdU.Centroid);
         
-        imgNameAndExt = strcat(imgName, '.mat');
-        
-        oldPointsFile = oldPointsFiles{cellfun(@(x) isempty(strfind(x, imgNameAndExt)) == 0, oldPointsFiles)};
-        oldPointsInfo = importdata(oldPointsFile);
-        
-        distanceToOldCentroids = pdist2(centroidsNSCsBrdU, oldPointsInfo.Centroids);
-        
-        %Calculate distance Matrix from centroids and invalid area
-        distanceMatrixNSCsBrdU = classifyByRegionAndCalculateDistanceMatrix(centroidsNSCsBrdU,invalidArea,H,W);
+        if isempty(centroidsNSCsBrdU) == 0
+            imgNameAndExt = strcat(imgName, '.mat');
 
-        thisSplittedPath=splittedPath{nFile};
+            oldPointsFile = oldPointsFiles{cellfun(@(x) isempty(strfind(x, imgNameAndExt)) == 0, oldPointsFiles)};
+            oldPointsInfo = importdata(oldPointsFile);
+
+            distanceToOldCentroids = pdist2(centroidsNSCsBrdU, oldPointsInfo.Centroids);
+
+            [~, indices] = min(distanceToOldCentroids, [], 2);
+
+            centroidsNSCsBrdU = oldPointsInfo.Centroids(indices, :);
+            %Calculate distance Matrix from centroids and invalid area
+            distanceMatrixNSCsBrdU = classifyByRegionAndCalculateDistanceMatrix(centroidsNSCsBrdU,invalidArea,H,W);
+
+            thisSplittedPath=splittedPath{nFile};
 
 
-        if ~isdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\'])
-            mkdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\']);
+            if ~isdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\'])
+                mkdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\']);
+            end
+            save(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\'  month '\' thisSplittedPath{6} '\' imgName '.mat'],'distanceMatrixNSCsBrdU','centroidsNSCsBrdU')
         end
-        save(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\'  month '\' thisSplittedPath{6} '\' imgName '.mat'],'distanceMatrixNSCsBrdU','CentroidsNSCsBrdU')
     end
 
 end
