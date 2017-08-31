@@ -20,8 +20,8 @@ function [] = randomPickBrdU()
             for i = 1:100
                 idCentroids = (1:size(Centroids, 1))';
                 numDots = 1;
-                indicesCentroidsRandom=cell(size(brdUPointsInfo.centroidsBrdUWithCorners, 1),1);
-                while numDots <= size(brdUPointsInfo.centroidsBrdUWithCorners, 1)
+                indicesCentroidsRandom=cell(size(brdUPointsInfo.centroidsNSCsBrdU, 1),1);
+                while numDots <= size(brdUPointsInfo.centroidsNSCsBrdU, 1)
                     centroidToDelete = randi(size(idCentroids, 1), 1);
                     if numDots > 1
                         indicesCentroidsRandom{numDots} = horzcat(idCentroids(centroidToDelete), indicesCentroidsRandom{numDots-1});
@@ -34,12 +34,14 @@ function [] = randomPickBrdU()
 
                 centroidsRandomAll = cellfun(@(x) Centroids(x, :), indicesCentroidsRandom, 'UniformOutput', false);
                 
-                infoCentroidsWithCorners.centroidsRandom = centroidsRandomAll{size(brdUPointsInfo.centroidsBrdUWithCorners, 1)};
-                infoCentroidsWithCorners.indicesCentroids = indicesCentroidsRandom{size(brdUPointsInfo.centroidsBrdUWithCorners, 1)};
-                infoCentroidsWithCorners.distanceMatrix = distanceMatrix(infoCentroidsWithCorners.indicesCentroids, infoCentroidsWithCorners.indicesCentroids);
-                
                 infoCentroids.centroidsRandom = centroidsRandomAll{size(brdUPointsInfo.centroidsNSCsBrdU, 1)};
                 infoCentroids.indicesCentroids = indicesCentroidsRandom{size(brdUPointsInfo.centroidsNSCsBrdU, 1)};
+                
+                infoCentroidsWithCorners.centroidsRandom = vertcat(infoCentroids.centroidsRandom, Centroids(brdUPointsInfo.cornerCentroidsIndices, :));
+                infoCentroidsWithCorners.indicesCentroids = horzcat(infoCentroids.indicesCentroids, brdUPointsInfo.cornerCentroidsIndices);
+                
+                infoCentroidsWithCorners.distanceMatrix = distanceMatrix(infoCentroidsWithCorners.indicesCentroids, infoCentroidsWithCorners.indicesCentroids);
+                
                 infoCentroids.distanceMatrix = distanceMatrix(infoCentroids.indicesCentroids, infoCentroids.indicesCentroids);
                 
                 brdUPointsFileSplitted = strsplit(brdUPointsFile, '\');
