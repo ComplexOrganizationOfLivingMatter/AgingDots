@@ -6,9 +6,6 @@ addpath('lib')
 distMatrix12Path='D:\Pedro\AgingDots\results\distanceMatrix\randomDeletionImages\12 months\12_';
 distMatrix18Path='D:\Pedro\AgingDots\results\distanceMatrix\randomDeletionImages\18 months\18_';
 
-threshold20mic=26.4;
-threshold50mic=66;
-
 
 
 for i=1:29 %num of 12 months images
@@ -33,20 +30,11 @@ for i=1:29 %num of 12 months images
             %load(distanceMatrixPath)
             load([distMatrix12Path num2str(i) '\' fileName],'distanceMatrix')
         end
-        auxMatrix=triu(distanceMatrix);
-        auxMatrix(auxMatrix==0)=[];
-        %20 micras. Edges & nodes
-        nEdgesClusterRandom20mc=sum(auxMatrix<threshold20mic);
-        [nodesCluster,~]=find((distanceMatrix<threshold20mic) & (distanceMatrix>0));
-        nNodesClusterRandom20mc=length(unique(nodesCluster));
+        
+        [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix );
         
         listNEdgesClusterRandom20mc(j)=nEdgesClusterRandom20mc;      
         listNNodesClusterRandom20mc(j)=nNodesClusterRandom20mc;
-        
-        %50 micras. Edges & nodes
-        nEdgesClusterRandom50mc=sum(auxMatrix<threshold50mic);
-        [nodesCluster,~]=find((distanceMatrix<threshold50mic) & (distanceMatrix>0));
-        nNodesClusterRandom50mc=length(unique(nodesCluster));
         
         listNEdgesClusterRandom50mc(j)=nEdgesClusterRandom50mc;
         listNNodesClusterRandom50mc(j)=nNodesClusterRandom50mc;
@@ -72,15 +60,7 @@ for i=1:29 %num of 12 months images
         load(['D:\Pedro\AgingDots\results\distanceMatrix\rawImages\12-' num2str(i) '.mat'],'distanceMatrix')
     end
     
-    auxMatrix=triu(distanceMatrix);
-    auxMatrix(auxMatrix==0)=[];
-    nEdgesClusterRaw20mc=sum(auxMatrix<threshold20mic);
-    [nodesCluster,~]=find((distanceMatrix<threshold20mic) & (distanceMatrix>0));
-    nNodesClusterRaw20mc=length(unique(nodesCluster));
-   
-    nEdgesClusterRaw50mc=sum(auxMatrix<threshold50mic);
-    [nodesCluster,~]=find((distanceMatrix<threshold50mic) & (distanceMatrix>0));
-    nNodesClusterRaw50mc=length(unique(nodesCluster));
+    [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix );
     
     path=['D:\Pedro\AgingDots\results\clusterDistance\12 months\' num2str(size(distanceMatrix,1)) '-dots'];
     if isdir(path)==0
@@ -108,21 +88,10 @@ for i=1:30 %num of 18 months images
         %load(distanceMatrixPath)
         load([distMatrix18Path num2str(i) '\' fileName],'distanceMatrix')
 
-        auxMatrix=triu(distanceMatrix);
-        auxMatrix(auxMatrix==0)=[];
-        
-        %20 micras. Edges & nodes
-        nEdgesClusterRandom20mc=sum(auxMatrix<threshold20mic);
-        [nodesCluster,~]=find((distanceMatrix<threshold20mic) & (distanceMatrix>0));
-        nNodesClusterRandom20mc=length(unique(nodesCluster));
+        [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix );
         
         listNEdgesClusterRandom20mc(j)=nEdgesClusterRandom20mc;      
         listNNodesClusterRandom20mc(j)=nNodesClusterRandom20mc;
-        
-        %50 micras. Edges & nodes
-        nEdgesClusterRandom50mc=sum(auxMatrix<threshold50mic);
-        [nodesCluster,~]=find((distanceMatrix<threshold50mic) & (distanceMatrix>0));
-        nNodesClusterRandom50mc=length(unique(nodesCluster));
         
         listNEdgesClusterRandom50mc(j)=nEdgesClusterRandom50mc;
         listNNodesClusterRandom50mc(j)=nNodesClusterRandom50mc;
@@ -146,16 +115,7 @@ for i=1:30 %num of 18 months images
     %Same operation including real image histogram
     load(['D:\Pedro\AgingDots\results\distanceMatrix\rawImages\18-' num2str(i) '.mat'],'distanceMatrix')
     
-    
-    auxMatrix=triu(distanceMatrix);
-    auxMatrix(auxMatrix==0)=[];
-    nEdgesClusterRaw20mc=sum(auxMatrix<threshold20mic);
-    [nodesCluster,~]=find((distanceMatrix<threshold20mic) & (distanceMatrix>0));
-    nNodesClusterRaw20mc=length(unique(nodesCluster));
-   
-    nEdgesClusterRaw50mc=sum(auxMatrix<threshold50mic);
-    [nodesCluster,~]=find((distanceMatrix<threshold50mic) & (distanceMatrix>0));
-    nNodesClusterRaw50mc=length(unique(nodesCluster));
+    [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix )
     
     path=['D:\Pedro\AgingDots\results\clusterDistance\18 months\' num2str(size(distanceMatrix,1)) '-dots'];
     if isdir(path)==0
