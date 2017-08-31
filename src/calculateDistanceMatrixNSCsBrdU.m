@@ -72,7 +72,7 @@ function [  ] = calculateDistanceMatrixNSCsBrdU(  )
             if ~isdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\'])
                 mkdir(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\' month '\' thisSplittedPath{6} '\']);
             end
-            save(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\'  month '\' thisSplittedPath{6} '\' imgName '.mat'], 'distanceMatrixNSCsBrdU', 'distanceMatrixWithCornersNSCsBrdU','centroidsNSCsBrdU')
+            save(['..\resultsByAnimal\NSCs BrdU\distanceMatrix\'  month '\' thisSplittedPath{6} '\' imgName '.mat'], 'distanceMatrixNSCsBrdU', 'distanceMatrixWithCornersNSCsBrdU','centroidsNSCsBrdU', 'centroidsBrdUWithCorners')
         end
     end
 
