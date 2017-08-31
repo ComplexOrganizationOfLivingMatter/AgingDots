@@ -46,12 +46,12 @@ function [] = randomPickBrdU()
                 
                 brdUPointsFileSplitted = strsplit(brdUPointsFile, '\');
 
-                outputDir = strcat('resultsByAnimal\NSCs BrdU\randomElection\', brdUPointsFileSplitted{end-1});
+                outputDir = strcat('resultsByAnimal\NSCs BrdU\randomElection\', brdUPointsFileSplitted{end-1}, '\', imgName(1:end-4));
                 if ~isdir(outputDir)
                     mkdir(outputDir);
                 end
 
-                save(strcat(outputDir, '\', imgName(1:end-4), '_Random' ,num2str(i)), 'infoCentroids', 'infoCentroidsWithCorners' ,'centroidsRandomAll');
+                save(strcat(outputDir, '\Random' ,num2str(i)), 'infoCentroids', 'infoCentroidsWithCorners' ,'centroidsRandomAll');
 
             end
         end
