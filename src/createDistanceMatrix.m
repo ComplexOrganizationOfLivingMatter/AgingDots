@@ -29,7 +29,7 @@ function [ ] = createDistanceMatrix( )
         
         
         
-        save(strcat('..\results\distanceMatrix\', imageNameSplitted{1}, '.mat'), 'distanceMatrix', 'Centroids');
+        save(strcat('..\results\distanceMatrix\', imgName(1:end-4), '.mat'), 'distanceMatrix', 'Centroids');
 
         %In case you want to show the image
 %         figure;
