@@ -1,6 +1,7 @@
 function [ distanceMatrix ] = classifyByRegionAndCalculateDistanceMatrix(Centroids,invalidArea,H,W)
  
     distanceMatrices=cell(size(Centroids, 1));
+    %figure;
     %find position in comparison with invalid region
     for i = 1:size(Centroids, 1)
         
@@ -9,13 +10,16 @@ function [ distanceMatrix ] = classifyByRegionAndCalculateDistanceMatrix(Centroi
             distanceMatrices{i}=round(bwdist(mask));
         
         
-            [~,Y]=find(invalidArea(Centroids(i, 2), :)==1);
+            [Y,~]=find(invalidArea(:, Centroids(i, 1))==1);
 
             if isempty(Y)
+                %plot(Centroids(i, 1), Centroids(i, 2), 'r*'); hold on; 
                 regionLabel(i)=3;
-            elseif Y(1) > Centroids(i, 1)
+            elseif Y(1) > Centroids(i, 2)
+                %plot(Centroids(i, 1), Centroids(i, 2), 'b*'); hold on; 
                 regionLabel(i)=2;
-            elseif Y(1) < Centroids(i, 1)
+            elseif Y(1) < Centroids(i, 2)
+                %plot(Centroids(i, 1), Centroids(i, 2), 'g*'); hold on; 
                 regionLabel(i)=1;
             end
     end
