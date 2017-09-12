@@ -40,6 +40,6 @@ function [ meanNNodesClusterRandom20mc, stdNNodesClusterRandom20mc, meanNNodesCl
     rawFileName = strcat(fileNameSplitted{end-1}, '.mat');
     rawFile = rawFiles{cellfun(@(x) isempty(strfind(x, rawFileName)) == 0, rawFiles)}; 
     load(rawFile);
-    [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrixNSCsBrdU );
+    [ nEdgesClusterRaw20mc, nNodesClusterRaw20mc, nEdgesClusterRaw50mc, nNodesClusterRaw50mc ] = checkClusterDistances( distanceMatrixNSCsBrdU );
 end
 

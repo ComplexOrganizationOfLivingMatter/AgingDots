@@ -15,6 +15,7 @@ function [ ] = pipelineBrdU( )
         for numImage = 3:size(dirImages, 1)
             randomFiles = getAllFiles(strcat(animalDir, '\', dirImages(numImage).name));
             [ meanNNodesClusterRandom20mc, stdNNodesClusterRandom20mc, meanNNodesClusterRandom50mc, stdNNodesClusterRandom50mc] = calculateNodesInCluster(randomFiles);
+            
         end
     end
 end

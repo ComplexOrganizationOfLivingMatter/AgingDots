@@ -50,14 +50,14 @@ function [  ] = calculateDistanceMatrixAlphaOmega(  )
         imageAlphaCells=maskCentroids-maskOmegaCells;
         [a,b]=find(imageAlphaCells==1);
         CentroidsAlpha = [b,a];
-%         figure;imshow(imdilate(imageAlphaCells,[1,1,1;1,1,1;1,1,1]));
+%       figure;imshow(imdilate(imageAlphaCells,[1,1,1;1,1,1;1,1,1]));
 
         %Checking by command window
         if (size(CentroidsAlpha,1)+size(CentroidsOmega,1))~=size(Centroids,1)
             [imgName ': ' num2str(size(CentroidsAlpha,1)) ' alpha cells, ' num2str(size(CentroidsOmega,1)) ' omega cells. ' num2str(size(Centroids,1)) ' stem cells']
         end
 
-%         close all
+%       close all
 
         %Calculate distance Matrix from centroids and invalid area
         distanceMatrixOmega=classifyByRegionAndCalculateDistanceMatrix(CentroidsOmega,invalidArea,H,W);
