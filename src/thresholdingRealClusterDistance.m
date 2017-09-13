@@ -30,7 +30,7 @@ for i=1:29 %num of 12 months images
             load([distMatrix12Path num2str(i) '\' fileName],'distanceMatrix')
         end
         
-        [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix );
+        [ nEdgesClusterRandom20mc, nNodesClusterRandom20mc, nEdgesClusterRandom50mc, nNodesClusterRandom50mc ] = checkClusterDistances( distanceMatrix, 1 );
         
         listNEdgesClusterRandom20mc(j)=nEdgesClusterRandom20mc;      
         listNNodesClusterRandom20mc(j)=nNodesClusterRandom20mc;
