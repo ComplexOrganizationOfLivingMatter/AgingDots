@@ -13,6 +13,7 @@ path2read50mc <- "D:/Pedro/AgingDots/resultsByAnimal/NSCs BrdU/clusterDistance/3
 pathSample20mc = list.files(path=path2read20mc,pattern="*.csv")
 pathSample50mc = list.files(path=path2read50mc,pattern="*.csv")
 
+hwJitter=0.1;
 
 for(i in 1:length(multFactors)){
   
@@ -30,10 +31,10 @@ for(i in 1:length(multFactors)){
       
       agingDotsTable20mc$phat <- predict(m1, type="response")
       ggplot(agingDotsTable20mc, aes(x = numberOfStemCells, y = phat, colour = name)) +
-        geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(h=.02)) +
+        geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(w=hwJitter, h=hwJitter)) +
         geom_line(size = 1) +
         labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters", colour = "Classes") + theme_classic() + 
-        scale_x_continuous(breaks = seq(1, 5, by=1)) + scale_y_continuous(breaks = seq(1, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
+        scale_x_continuous(breaks = seq(0, 5, by=1)) + scale_y_continuous(breaks = seq(0, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
       
       ggsave(paste(path2read20mc,"animal ",j,"/statisticAnimal_", j,"_clusterDistance20mc_x", multFactors[i], ".tiff",sep=""),
               dpi = 300)
@@ -53,10 +54,10 @@ for(i in 1:length(multFactors)){
     
     agingDotsTable50mc$phat <- predict(m1, type="response")
     ggplot(agingDotsTable50mc, aes(x = numberOfStemCells, y = phat, colour = name)) +
-      geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(h=.02)) +
+      geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(w=hwJitter, h=hwJitter)) +
       geom_line(size = 1) +
       labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters", colour = "Classes") + theme_classic() + 
-      scale_x_continuous(breaks = seq(1, 5, by=1)) + scale_y_continuous(breaks = seq(1, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
+      scale_x_continuous(breaks = seq(0, 5, by=1)) + scale_y_continuous(breaks = seq(0, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
     
     ggsave(paste(path2read50mc,"animal ",j,"/statisticAnimal_", j,"_clusterDistance50mc_x", multFactors[i], ".tiff",sep=""),
            dpi = 300)
@@ -74,10 +75,10 @@ for(i in 1:length(multFactors)){
     ##show and save figure
     agingDotsTable20mc$phat <- predict(m1, type="response")
     ggplot(agingDotsTable20mc, aes(x = numberOfStemCells, y = phat, colour = name)) +
-      geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(h=.02)) +
+      geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(w=hwJitter, h=hwJitter)) +
       geom_line(size = 1) +
       labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters", colour = "Classes") + theme_classic() + 
-      scale_x_continuous(breaks = seq(1, 5, by=1)) + scale_y_continuous(breaks = seq(1, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
+      scale_x_continuous(breaks = seq(0, 5, by=1)) + scale_y_continuous(breaks = seq(0, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
     
     ggsave(paste(path2read20mc,"clusterDistance20mc_x", multFactors[i], ".tiff",sep=""),
            dpi = 300)
@@ -100,10 +101,10 @@ for(i in 1:length(multFactors)){
   ##show and save figure
   agingDotsTable50mc$phat <- predict(m1, type="response")
   ggplot(agingDotsTable50mc, aes(x = numberOfStemCells, y = phat, colour = name)) +
-    geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(h=.02)) +
+    geom_point(aes(y = stemCellsInCluster), alpha=.5, position=position_jitter(w=hwJitter, h=hwJitter)) +
     geom_line(size = 1) +
     labs(x = "Total number of stem cells", y = "Expected number of stem cells in clusters", colour = "Classes") + theme_classic() + 
-    scale_x_continuous(breaks = seq(1, 5, by=1)) + scale_y_continuous(breaks = seq(1, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
+    scale_x_continuous(breaks = seq(0, 5, by=1)) + scale_y_continuous(breaks = seq(0, 5, by=1)) + theme(panel.grid.major.y = element_line(size = 0.05, colour = "grey80"), axis.text=element_text(size=13), axis.title=element_text(size=13,face="bold"))
   
   ggsave(paste(path2read50mc,"clusterDistance50mc_x", multFactors[i], ".tiff",sep=""),
          dpi = 300)
