@@ -4,7 +4,7 @@ require(msm)
 require(R.matlab)
 library(readr)
 
-agingDotsTable <- read_csv("D:/Pablo/AgingDots/results/agingDotsTable.txt")
+agingDotsTable <- read_csv("D:/Pedro/AgingDots/resultsByAnimal/NSCs BrdU/clusterDistance/3m/agingDotsTable.txt")
 agingDotsTable$meanOfDots = as.integer(agingDotsTable$meanOfDots)
 
 summary(m1 <- glm(meanOfDots ~ name + numberOfStemCells, family="poisson", data=agingDotsTable))
@@ -58,6 +58,6 @@ ggplot(agingDotsTable, aes(x = numberOfStemCells, y = phat, colour = name)) +
 ##What we really wanted! See if the classes are different
 
 summary(m2 <- glm(meanOfDots ~ name + numberOfStemCells, family="poisson", data=agingDotsTable[agingDotsTable$name != "Random", ]))
-m3 <- glm(meanOfDots ~ numberOfStemCells, family="poisson", data=agingDotsTable)
+m3 <- m3(numberOfStemCells, family="poisson", data=agingDotsTable)
 ## test model differences with chi square test
 anova(m3, m1, test="Chisq")
